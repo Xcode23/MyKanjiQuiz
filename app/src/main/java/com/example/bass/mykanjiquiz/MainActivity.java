@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String KANJI = "com.example.myfirstapp.KANJI";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +62,16 @@ public class MainActivity extends AppCompatActivity {
             // provided to this method as a parameter.
             // Pull that URI using resultData.getData().
             Uri uri = null;
+            ArrayList kanjiStruct= null;
             if (resultData != null) {
                 try {
-                    ArrayList kanjiStruct = readTextFromUri(resultData.getData());
+                    kanjiStruct = readTextFromUri(resultData.getData());
                 }catch(IOException e){System.out.println("IO ERROR\n");}
+
+                Intent intent = new Intent(this, RandomKanjiActivity.class);
+                intent.putExtra(KANJI, kanjiStruct);
+                startActivity(intent);
+
             }
         }
     }
@@ -76,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] tokens=line.split("->");
+            for(int i=0; i<tokens.length; i++){
+                tokens[i]=tokens[i].trim();
+            }
             kanjiStruct.add(tokens);
         }
         inputStream.close();
