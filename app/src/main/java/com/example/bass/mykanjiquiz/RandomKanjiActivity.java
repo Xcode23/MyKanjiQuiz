@@ -13,9 +13,13 @@ import java.util.Random;
 
 public class RandomKanjiActivity extends AppCompatActivity {
 
+    public static final int WRITING = 0;
+    public static final int MEANING = 2;
+
     private String[] buttons = {"Kanji","Reading","Meaning"};
     private ArrayList<String[]> kanjiStruct;
     private Random rand;
+    private int category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +29,12 @@ public class RandomKanjiActivity extends AppCompatActivity {
         kanjiStruct = (ArrayList<String[]>) intent.getSerializableExtra(MainActivity.KANJI);
         //Collections.shuffle(kanjiStruct);
         rand = new Random();
+        category = WRITING;
         newKanji();
     }
 
     private void newKanji() {
-        int n = rand.nextInt(3);
+        int n = category;
         int m = rand.nextInt(kanjiStruct.size());
 
         TextView mainTextView = findViewById(R.id.textView);
@@ -65,6 +70,12 @@ public class RandomKanjiActivity extends AppCompatActivity {
     public void onClickShow2(View view) {
         TextView textView1 = findViewById(R.id.textView2);
         textView1.setVisibility(View.VISIBLE);
+    }
+
+    public void onClickCategory(View view) {
+        if(category == WRITING)category = MEANING;
+        else category = WRITING;
+        newKanji();
     }
 
 }

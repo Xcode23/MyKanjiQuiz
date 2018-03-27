@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RandomKanjiActivity"></activity>
+        <activity
+            android:name=".RandomKanjiActivity"
+            android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>
